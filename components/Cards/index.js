@@ -20,8 +20,36 @@
 // Use your function to create a card for each of the articles and add the card to the DOM.
 
 let area = document.querySelector('.cards-container');
-function cardMaker(){
 
+axios.get('https://lambda-times-backend.herokuapp.com/articles')
+    .then(res => {
+           let jsArt = Array.from(res.data.articles.javascript);
+           let bootArt = Array.from(res.data.articles.bootstrap);
+           let techArt = Array.from(res.data.articles.technology);
+            let jArt = Array.from(res.data.articles.jquery);
+            let nodeArt = Array.from(res.data.articles.node);
+           jsArt.forEach(element => {
+                let newArticle = cardMaker(element);
+            });
+            bootArt.forEach(element => {
+                let newArticle = cardMaker(element);
+            });
+            techArt.forEach(element => {
+                let newArticle = cardMaker(element);
+            });
+            jArt.forEach(element => {
+                let newArticle = cardMaker(element);
+            });
+            nodeArt.forEach(element => {
+                let newArticle = cardMaker(element);
+            });
+    })
+    .catch(err => console.log(err));
+
+
+
+function cardMaker(data){
+    
     //create HTML elements
     let card = document.createElement('div');
     let headline = document.createElement('div');
@@ -37,7 +65,9 @@ function cardMaker(){
     imgContain.classList.add('img-container');
 
     //place content into elements
-
+    headline.textContent = data.headline;
+    authorImg.src = data.authorPhoto;
+    authorName.textContent = data.authorName;
 
 
     //append elements properly
@@ -47,4 +77,3 @@ function cardMaker(){
     imgContain.appendChild(authorImg);
 
 }
-cardMaker();
